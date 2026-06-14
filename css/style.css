@@ -1,0 +1,30 @@
+/* ==========================================================================
+   Truy vấn #1: Chế độ xem máy tính bảng (Kích hoạt từ 772px trở lên)
+   ========================================================================== */
+@media screen and (min-width: 772px) {
+    /* Thay đổi các div để chúng nằm cạnh nhau (2 div trên một hàng) */
+    div, .card, section > div { /* Thay selector này bằng class/thẻ chính xác trong HTML của bài (thường là div) */
+        display: inline-block;
+        width: 45%;
+        margin: 1%; /* Thêm một chút khoảng cách giữa các div để bố cục đẹp hơn */
+        vertical-align: top; /* Giúp các div thẳng hàng ở phía trên */
+        box-sizing: border-box; /* Đảm bảo padding/border không làm vỡ hàng */
+    }
+
+    /* Giới hạn chiều cao hình ảnh không quá 30% chiều cao khung xem */
+    img {
+        max-height: 30vh; /* Hoặc 30% tùy theo cấu trúc thẻ cha, nhưng 30vh thường chính xác cho "viewport height" */
+        width: auto;      /* Giữ nguyên tỷ lệ hình ảnh không bị méo */
+    }
+}
+
+/* ==========================================================================
+   Truy vấn #2: Chế độ xem màn hình lớn (Kích hoạt từ 998px trở lên)
+   ========================================================================== */
+@media screen and (min-width: 998px) {
+    /* Thay đổi chiều rộng để 3 div nằm gọn trên một hàng ngang */
+    div, .card, section > div { 
+        width: 30%;
+        margin: 1.5%; /* Điều chỉnh lại margin để cân đối với chiều rộng 30% */
+    }
+}
