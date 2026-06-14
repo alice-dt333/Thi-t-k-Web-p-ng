@@ -1,0 +1,133 @@
+/* ==========================================================================
+   1. CHẾ ĐỘ XEM DI ĐỘNG (MOBILE-FIRST - MẶC ĐỊNH CHO MỌI MÀN HÌNH)
+   - Thiết kế lưới một cột với khoảng cách 10px giữa các hàng và cột.
+   ========================================================================== */
+
+/* Định dạng vùng chứa lưới .grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Lưới một cột trên điện thoại */
+  gap: 10px;                  /* Khoảng cách 10px giữa hàng và cột */
+  padding: 10px;
+}
+
+/* ĐỊNH DẠNG KHUNG VIỀN ĐEN DÀY BAO QUANH ẢNH VÀ CHỮ Y HỆT HÌNH MẪU */
+figure {
+  margin: 0;
+  padding: 0;                   /* Bỏ padding để ảnh sát mép viền */
+  background-color: #222222;    /* Nền tối cho phần chữ bên dưới */
+  border: 5px solid #000000;    /* Khung viền đen dày bao quanh */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cấu hình ảnh co giãn tràn khung viền */
+figure img {
+  width: 100% !important;       /* Ép ảnh vừa khít chiều rộng khung */
+  height: auto;
+  display: block;
+  border-bottom: 5px solid #000000; /* Vạch đen dày ngăn cách giữa ảnh và chữ */
+}
+
+/* Định dạng phần chữ figcaption bên dưới ảnh */
+figcaption {
+  margin: 0;
+  padding: 12px 0;
+  color: #ffeb3b;               /* Chữ màu vàng chuẩn, rõ nét */
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: #222222;    /* Giữ nền tối */
+}
+
+
+/* ==========================================================================
+   2. TRUY VẤN PHƯƠNG TIỆN CHO MÁY TÍNH BẢNG (TABLET VIEW - TỪ 772PX)
+   - Kích hoạt ở 772px, lưới hai cột, góc bo tròn hình tròn.
+   ========================================================================== */
+@media (min-width: 772px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* Đổi sang lưới hai cột */
+  }
+
+  /* Đặt bán kính đường viền trên các hình để tạo hình tròn theo yêu cầu đề bài */
+  figure {
+    border-radius: 50%;
+    overflow: hidden;         /* Cắt ảnh bên trong bo tròn theo khung viền */
+    aspect-ratio: 1 / 1;      /* Ép khung thành hình vuông tỉ lệ 1:1 để bo tròn hoàn hảo */
+  }
+
+  /* Đặt con số cuối cùng (thẻ figure thứ 9) để chiếm cả hai cột */
+  figure:last-child {
+    grid-column: span 2;
+    border-radius: 0;         /* Xóa bo tròn khi chiếm 2 cột để không bị méo hình */
+    aspect-ratio: auto;
+  }
+}
+
+
+/* ==========================================================================
+   3. TRUY VẤN PHƯƠNG TIỆN CHO MÀN HÌNH LỚN (LARGE SCREEN VIEW - TỪ 992PX)
+   - Kích hoạt ở 992px, lưới 3 cột, xóa bo tròn, không dùng max-width.
+   ========================================================================== */
+@media (min-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr); /* Chuyển sang lưới 3 cột trên màn hình lớn */
+  }
+
+  /* Xóa bán kính đường viền khỏi tất cả các hình (quay lại khung vuông viền đen) */
+  figure {
+    border-radius: 0;
+    aspect-ratio: auto;
+  }
+
+  /* Đặt mỗi con số thứ ba (phần tử thứ 3, 6, 9) để chiếm cả hai cột */
+  figure:nth-child(3n) {
+    grid-column: span 2;
+  }
+}
+
+
+/* ==========================================================================
+   4. TRUY VẤN PHƯƠNG TIỆN GIẢM CHUYỂN ĐỘNG (PREFERS-REDUCED-MOTION)
+   - Xóa hành vi cuộn mượt và tắt toàn bộ hiệu ứng động nếu người dùng yêu cầu.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important; /* Xóa hành vi cuộn mượt */
+  }
+
+  *, *::before, *::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+
+/* ==========================================================================
+   5. TRUY VẤN PHƯƠNG TIỆN CHO CHẾ ĐỘ MÀU TỐI (PREFERS-COLOR-SCHEME: DARK)
+   - Tự động thay đổi màu nền trang web khi hệ thống bật Dark Mode.
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212; /* Thay đổi nền trang web thành màu tối */
+  }
+  
+  /* Do giao diện mặc định ban đầu chúng ta đã dựng sẵn khung đen chữ vàng 
+     để giống hình mẫu của bạn, nên phần này giữ nguyên giao diện tối đó */
+  figure {
+    background-color: #222222;
+    border-color: #000000;
+  }
+
+  figcaption {
+    color: #ffeb3b;
+    background-color: #222222;
+  }
+}
